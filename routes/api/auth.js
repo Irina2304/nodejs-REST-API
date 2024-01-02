@@ -7,21 +7,21 @@ import { userSignupSchema, userSigninSchema } from "../../models/User.js";
 const authRouter = express.Router();
 
 authRouter.post(
-  "/signup",
+  "/register",
   isEmptyBody,
   validateBody(userSignupSchema),
-  authController.signup
+  authController.register
 );
 
 authRouter.post(
-  "/signin",
+  "/login",
   isEmptyBody,
   validateBody(userSigninSchema),
-  authController.signin
+  authController.login
 );
 
-authRouter.get("/current", authenticate, authController.getCurrent);
+authRouter.get("/current", authenticate, authController.current);
 
-authRouter.post("/signout", authenticate, authController.signout);
+authRouter.post("/logout", authenticate, authController.logout);
 
 export default authRouter;

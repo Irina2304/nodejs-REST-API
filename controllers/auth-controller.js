@@ -9,7 +9,7 @@ import { ctrlWrapper } from "../decorators/index.js";
 
 const { JWT_SECRET } = process.env;
 
-const signup = async (req, res) => {
+const register = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
@@ -26,7 +26,7 @@ const signup = async (req, res) => {
   });
 };
 
-const signin = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -55,7 +55,7 @@ const signin = async (req, res) => {
   });
 };
 
-const getCurrent = async (req, res) => {
+const current = async (req, res) => {
   const { name, email, subscription } = req.user;
 
   res.json({
@@ -65,18 +65,18 @@ const getCurrent = async (req, res) => {
   });
 };
 
-const signout = async (req, res) => {
+const logout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
 
   res.json({
-    message: "Signout success",
+    message: "Logout success",
   });
 };
 
 export default {
-  signup: ctrlWrapper(signup),
-  signin: ctrlWrapper(signin),
-  getCurrent: ctrlWrapper(getCurrent),
-  signout: ctrlWrapper(signout),
+  register: ctrlWrapper(register),
+  login: ctrlWrapper(login),
+  current: ctrlWrapper(current),
+  logout: ctrlWrapper(logout),
 };
