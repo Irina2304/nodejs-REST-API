@@ -22,6 +22,7 @@ const signup = async (req, res) => {
   res.json({
     name: newUser.name,
     email: newUser.email,
+    subscription: newUser.subscription,
   });
 };
 
@@ -47,15 +48,20 @@ const signin = async (req, res) => {
 
   res.json({
     token,
+    user: {
+      email,
+      subscription: user.subscription,
+    },
   });
 };
 
 const getCurrent = async (req, res) => {
-  const { name, email } = req.user;
+  const { name, email, subscription } = req.user;
 
   res.json({
     name,
     email,
+    subscription,
   });
 };
 

@@ -12,6 +12,7 @@ const getAll = async (req, res) => {
     skip,
     limit,
   }).populate("owner", "name");
+
   res.json(result);
 };
 
