@@ -19,7 +19,6 @@ import {
 const contactsRouter = express.Router();
 
 contactsRouter.use(authenticate);
-// moviesRouter.  use(authenticate);
 
 contactsRouter.get("/", contactsController.getAll);
 
