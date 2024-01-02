@@ -6,15 +6,20 @@ import { ctrlWrapper } from "../decorators/index.js";
 
 const getAll = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 20, favorite = true } = req.query;
+  const { page = 1, limit = 20, ...filterParams } = req.query;
   const skip = (page - 1) * limit;
-  const result = await Contact.find({ owner }, "-createdAt -updatedAt", {
+  const filter = { owner, ...filterParams };
+
+  const result = await Contact.find(filter, "-createdAt -updatedAt", {
     skip,
     limit,
-    favorite,
   }).populate("owner", "name");
+  const total = await Contact.countDocuments(filter);
 
-  res.json(result);
+  res.json({
+    result,
+    total,
+  });
 };
 
 const getById = async (req, res) => {
