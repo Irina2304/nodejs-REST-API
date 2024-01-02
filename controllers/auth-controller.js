@@ -74,9 +74,20 @@ const logout = async (req, res) => {
   });
 };
 
+const update = async (req, res) => {
+  const { _id } = req.user;
+  const result = await User.findByIdAndUpdate({ _id }, req.body);
+  if (!result) {
+    throw HttpError(404, `Contact with id=${id} not found`);
+  }
+
+  res.json(result);
+};
+
 export default {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   current: ctrlWrapper(current),
   logout: ctrlWrapper(logout),
+  update: ctrlWrapper(update),
 };
