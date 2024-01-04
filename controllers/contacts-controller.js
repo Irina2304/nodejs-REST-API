@@ -13,7 +13,7 @@ const getAll = async (req, res) => {
   const result = await Contact.find(filter, "-createdAt -updatedAt", {
     skip,
     limit,
-  }).populate("owner", "name");
+  }).populate("owner", "id");
   const total = await Contact.countDocuments(filter);
 
   res.json({
