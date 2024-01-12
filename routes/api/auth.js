@@ -29,6 +29,7 @@ authRouter.patch("/", isEmptyBody, authenticate, authController.update);
 authRouter.patch(
   "/avatars",
   upload.single("avatar"),
+  isEmptyBody,
   authenticate,
   authController.updateAvatar
 );

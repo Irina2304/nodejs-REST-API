@@ -56,7 +56,7 @@ const login = async (req, res) => {
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
   await User.findByIdAndUpdate(id, { token });
 
-  res.json({
+  res.status(200).json({
     token,
     user: {
       email,
@@ -95,6 +95,9 @@ const update = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
+  if (!req.file) {
+    throw HttpError(400, "File not found");
+  }
   const { path: oldPath, originalname } = req.file;
   const filename = `${_id}_${originalname}`;
 
